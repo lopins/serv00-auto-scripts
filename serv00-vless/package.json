@@ -1,0 +1,21 @@
+{
+  "name": "okka-express",
+  "version": "1.0.0",
+  "description": "okka Hello World",
+  "main": "index.js",
+  "author": "okka",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ws": "^8.14.2",
+    "express": "^4.18.2",
+    "http-proxy": "latest"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
