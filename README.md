@@ -62,4 +62,6 @@ FinalShell是一体化的的服务器,网络管理软件,不仅是ssh客户端,�
 
 - Memcached配置: <https://docs.serv00.com/Memcached/>
 
+  启动：memcached -s /usr/home/LOGIN/domains/DOMAIN/memcached.sock -d
+
 - Redis配置: <https://docs.serv00.com/Memcached/>
