@@ -56,6 +56,10 @@ FinalShell是一体化的的服务器,网络管理软件,不仅是ssh客户端,�
 
 - Linux LoongArch64龙芯版,下载地址: <http://www.hostbuf.com/downloads/finalshell_linux_loong64.deb>
 
-## PHP配置
+## 其他服务
 
-https://docs.serv00.com/PHP/#php-version
+- PHP配置: <https://docs.serv00.com/PHP/#php-version>
+
+- Memcached配置: <https://docs.serv00.com/Memcached/>
+
+- Redis配置: <https://docs.serv00.com/Memcached/>
