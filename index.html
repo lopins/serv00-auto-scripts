@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Generator -- Serv00.com</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .user-row {
+            margin-bottom: 20px;
+        }
+
+        .el-form-item {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .el-form-item__content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <el-container>
+            <el-header>
+                <h2>{{ currentLang.title }}</h2>
+            </el-header>
+            <el-main>
+                <el-form ref="userDataForm" :model="users" label-width="100px">
+                    <div v-for="(user, index) in users" :key="index" class="user-row">
+                        <el-row :gutter="20">
+                            <el-col :span="8">
+                                <el-form-item :label="currentLang.username">
+                                    <el-input v-model="user.username"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item :label="currentLang.password">
+                                    <el-input v-model="user.password" type="password"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item :label="currentLang.panelnum">
+                                    <el-input v-model="user.panelnum"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-button @click="removeUser(index)">{{ currentLang.remove }}</el-button>
+                    </div>
+                    <el-button @click="addUser">{{ currentLang.add }}</el-button>
+                    <br><br>
+                    <el-button @click="generateJson">{{ currentLang.generate }}</el-button>
+                </el-form>
+            </el-main>
+            <el-footer>
+                <pre id="jsonOutput">{{ jsonOutput }}</pre>
+            </el-footer>
+        </el-container>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        const LANGUAGES = {
+            en: {
+                title: 'Input User Data',
+                username: 'Username:',
+                password: 'Password:',
+                panelnum: 'Panel Number:',
+                add: 'Add User',
+                remove: 'Remove',
+                generate: 'Generate JSON'
+            },
+            zh: {
+                title: '输入用户数据',
+                username: '用户名:',
+                password: '密码:',
+                panelnum: '面板编号:',
+                add: '添加用户',
+                remove: '移除',
+                generate: '生成 JSON'
+            }
+        };
+
+        let language = (navigator.language || navigator.userLanguage).toLowerCase().substr(0, 2);
+        if (!LANGUAGES[language]) {
+            language = 'en'; // 默认语言为英语
+        }
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    users: [
+                        { username: '', password: '', panelnum: '' }
+                    ],
+                    jsonOutput: '',
+                    language: language
+                };
+            },
+            computed: {
+                currentLang() {
+                    return LANGUAGES[this.language];
+                }
+            },
+            methods: {
+                addUser() {
+                    this.users.push({ username: '', password: '', panelnum: '' });
+                },
+                removeUser(index) {
+                    this.users.splice(index, 1);
+                },
+                generateJson() {
+                    const data = this.users.map(user => ({
+                        username: user.username,
+                        password: user.password,
+                        panelnum: user.panelnum
+                    }));
+                    this.jsonOutput = JSON.stringify(data, null, 4);
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
