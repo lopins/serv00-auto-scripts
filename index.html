@@ -4,20 +4,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Generator -- Serv00.com</title>
+    <link rel="icon" href="favicon.ico">
+    <title>Serv00 JSON Generator -- Serv00.com</title>
+    <meta name="keywords" content="JSON Generator, Serv00, Serv00.com">
+    <meta name="description" content="Serv00 JSON Generator is a tool for generating JSON data. It provides various options to customize the generated JSON.">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <style>
-        .user-row {
-            margin-bottom: 20px;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; 
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        .app-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
         }
 
-        .el-form-item {
-            margin-bottom: 10px;
+        /* .left-align {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            flex-direction: row; 
+        }
+
+        .right-align {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+        } */
+
+        .user-row {
+    margin-bottom: 20px; /* 可选：为每行用户信息之间添加一些间距 */
+}
+
+        .left-align {
+            float: left;
+            display: flex;
+            align-items: center; /* 垂直居中对齐 */
+            justify-content: flex-start; /* 水平平铺对齐 */
+            flex-wrap: nowrap; /* 防止换行 */
+        }
+
+        .form-item {
+            float: left;
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .form-item:last-child {
+            margin-right: 0; 
+        }
+
+        .right-align {
+            float: right;
+            text-align: right;
+        }
+
+        .button-row {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .json-output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #3b4048;
+            color: #abb2bf;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .copy-button:hover {
+            background-color: #4e5460;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
+            font-size: 100px;
+            color: rgba(0, 0, 0, 0.2);
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @media (max-width: 768px) {
             .el-form-item__content {
                 width: 100%;
+            }
+            .remove-button {
+                text-align: left;
             }
         }
     </style>
@@ -25,71 +130,151 @@
 
 <body>
 
-    <div id="app">
+    <div class="app-container" id="app">
         <el-container>
-            <el-header>
-                <h2>{{ currentLang.title }}</h2>
+            <el-header style="text-align: center;">
+                <h1>{{ currentLang.title }}</h1>
             </el-header>
             <el-main>
-                <el-form ref="userDataForm" :model="users" label-width="100px">
-                    <div v-for="(user, index) in users" :key="index" class="user-row">
-                        <el-row :gutter="20">
-                            <el-col :span="8">
-                                <el-form-item :label="currentLang.username">
-                                    <el-input v-model="user.username"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item :label="currentLang.password">
-                                    <el-input v-model="user.password" type="password"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item :label="currentLang.panelnum">
-                                    <el-input v-model="user.panelnum"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-button @click="removeUser(index)">{{ currentLang.remove }}</el-button>
-                    </div>
-                    <el-button @click="addUser">{{ currentLang.add }}</el-button>
-                    <br><br>
-                    <el-button @click="generateJson">{{ currentLang.generate }}</el-button>
+                <el-form ref="userDataForm" :model="users" label-width="auto">
+                    <el-row v-for="(user, index) in users" :key="index" class="user-row">
+                        <el-col :span="20" class="left-align">
+                            <el-form-item :label="currentLang.username" class="form-item">
+                                <el-input v-model="user.username"></el-input>
+                            </el-form-item>
+                            <el-form-item :label="currentLang.password" class="form-item">
+                                <el-input v-model="user.password" type="password"></el-input>
+                            </el-form-item>
+                            <el-form-item :label="currentLang.panelnum" class="form-item">
+                                <el-input v-model="user.panelnum"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="2" class="right-align">
+                            <el-button @click="removeUser(index)">{{ currentLang.remove }}</el-button>
+                        </el-col>
+                    </el-row>
+                    <el-row class="button-row" :gutter="20">
+                        <el-col :span="12">
+                            <el-button @click="addUser" style="width: 100%;">{{ currentLang.add }}</el-button>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-button @click="generateJson" style="width: 100%;">{{ currentLang.generate }}</el-button>
+                        </el-col>
+                    </el-row>
                 </el-form>
             </el-main>
             <el-footer>
-                <pre id="jsonOutput">{{ jsonOutput }}</pre>
+                <pre class="json-output" id="jsonOutput">
+                    <button class="copy-button" @click="copyToClipboard" v-if="jsonOutput">{{ currentLang.copy }}</button>
+                    <code class="hljs json" v-html="highlightedJson"></code>
+                </pre>
             </el-footer>
         </el-container>
     </div>
 
+    <div class="watermark" id="watermark">DO NOT RECORD</div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+
+            // 全屏模式
+            function requestFullScreen() {
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { // Firefox
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { // IE/Edge
+                    elem.msRequestFullscreen();
+                }
+            }
+
+            // 检测录屏工具
+            function detectScreenRecording() {
+                const mediaRecorder = MediaRecorder && MediaRecorder.isTypeSupported;
+                if (mediaRecorder) {
+                    setInterval(() => {
+                        if (MediaRecorder.state === 'recording') {
+                            alert('Screen recording detected! Please stop recording.');
+                            // 可以在这里隐藏敏感内容或采取其他措施
+                        }
+                    }, 1000);
+                }
+            }
+
+            // 水印反弹动画
+            function animateWatermark() {
+                const watermark = document.getElementById('watermark');
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const watermarkWidth = watermark.offsetWidth;
+                const watermarkHeight = watermark.offsetHeight;
+
+                let x = 0;
+                let y = 0;
+                let dx = 2; // 水平速度
+                let dy = 2; // 垂直速度
+
+                function updatePosition() {
+                    x += dx;
+                    y += dy;
+
+                    if (x + watermarkWidth >= viewportWidth || x <= 0) {
+                        dx = -dx;
+                    }
+
+                    if (y + watermarkHeight >= viewportHeight || y <= 0) {
+                        dy = -dy;
+                    }
+
+                    watermark.style.transform = `translate(${x}px, ${y}px) rotate(-45deg)`;
+                    requestAnimationFrame(updatePosition);
+                }
+
+                updatePosition();
+            }
+
+            requestFullScreen();
+            detectScreenRecording();
+            animateWatermark();
+        });
+
         const LANGUAGES = {
             en: {
-                title: 'Input User Data',
+                title: 'Input Panel Data',
                 username: 'Username:',
                 password: 'Password:',
-                panelnum: 'Panel Number:',
+                panelnum: 'Panel No:',
                 add: 'Add User',
                 remove: 'Remove',
-                generate: 'Generate JSON'
+                generate: 'Generate JSON',
+                copy: 'Copy',
+                emptyFieldsWarning: 'Please fill in all required fields.',
+                copiedToClipboard: 'JSON copied to clipboard!'
             },
             zh: {
-                title: '输入用户数据',
-                username: '用户名:',
-                password: '密码:',
+                title: '输入面板数据',
+                username: '用 户 名:',
+                password: '账号密码:',
                 panelnum: '面板编号:',
                 add: '添加用户',
                 remove: '移除',
-                generate: '生成 JSON'
+                generate: '生成 JSON',
+                copy: '复制',
+                emptyFieldsWarning: '请填写所有必填项。',
+                copiedToClipboard: 'JSON 已复制到剪贴板！'
             }
         };
 
         let language = (navigator.language || navigator.userLanguage).toLowerCase().substr(0, 2);
         if (!LANGUAGES[language]) {
-            language = 'en'; // 默认语言为英语
+            language = 'en'; // Default to English
         }
 
         new Vue({
@@ -100,6 +285,7 @@
                         { username: '', password: '', panelnum: '' }
                     ],
                     jsonOutput: '',
+                    highlightedJson: '',
                     language: language
                 };
             },
@@ -116,12 +302,35 @@
                     this.users.splice(index, 1);
                 },
                 generateJson() {
+                    // Check for empty fields
+                    const hasEmptyFields = this.users.some(user => !user.username || !user.password || !user.panelnum);
+                    if (hasEmptyFields) {
+                        this.$message({
+                            message: this.currentLang.emptyFieldsWarning,
+                            type: 'warning'
+                        });
+                        return;
+                    }
+
                     const data = this.users.map(user => ({
                         username: user.username,
                         password: user.password,
                         panelnum: user.panelnum
                     }));
                     this.jsonOutput = JSON.stringify(data, null, 4);
+                    this.highlightedJson = hljs.highlight('json', this.jsonOutput).value;
+                },
+                copyToClipboard() {
+                    const tempTextarea = document.createElement('textarea');
+                    tempTextarea.value = this.jsonOutput;
+                    document.body.appendChild(tempTextarea);
+                    tempTextarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempTextarea);
+                    this.$message({
+                        message: this.currentLang.copiedToClipboard,
+                        type: 'success'
+                    });
                 }
             }
         });
