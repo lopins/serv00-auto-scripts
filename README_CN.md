@@ -2,23 +2,32 @@
    <strong>中文</strong> | <a href="README.md">English</a>
 </div>
 
-<img src="https://www.serv00.com/static/ct8/img/logo.jpg" alt="serv00 logo" width="100" height="100" align="right" />
+<img src="https://www.serv00.com/static/ct8/img/logo.jpg" alt="serv00 logo" width="50" height="50" align="right" />
 
 <div align="center">
 
 <h1> serv00-auto-scripts </h1>
 
-<p>Serv00 - 免费主机自动续期（自动SSH以及PM2）及其他脚本。</p>
+<p>Serv00/CT8 - 免费主机自动续期（自动SSH以及PM2）及其他脚本。</p>
 
 </div>
 
 <hr/>
 
 <div align="center">
-<a href="https://panel.serv00.com/">面板</a> | 
-<a href="https://www.serv00.com/">官网</a> | 
-<a href="https://docs.serv00.com/">文档</a> | 
-<a href="https://forum.serv00.com/">社区</a>
+<a href="https://panel.serv00.com/">serv00面板</a> | 
+<a href="https://www.serv00.com/">serv00官网</a> | 
+<a href="https://docs.serv00.com/">serv00文档</a> | 
+<a href="https://forum.serv00.com/">serv00社区</a>
+</div>
+
+<hr/>
+
+<div align="center">
+<a href="https://panel.ct8.pl/">CT8面板</a> | 
+<a href="https://www.ct8.pl/">CT8官网</a> | 
+<a href="https://wiki.mydevil.net/">CT8文档</a> | 
+<a href="https://forum.ct8.pl/">CT8社区</a>
 </div>
 
 <hr/>
@@ -33,25 +42,15 @@
 
 ``` json
 [  
-  { "username": "qishihuang", "password": "zhanghao", "panelnum": "3" },  
-  { "username": "zhaogao", "password": "daqinzhonggong", "panelnum": "1" },  
-  { "username": "heiheihei", "password": "shaibopengke", "panelnum": "2" }  
+  { "username": "qishihuang", "password": "zhanghao", "panel": "panel3.serv00.com" },  
+  { "username": "zhaogao", "password": "daqinzhonggong", "panel": "panel1.serv00.com" },  
+  { "username": "heiheihei", "password": "shaibopengke", "panel": "panel.ct8.pl" }  
 ]
 ```
 
-> 其中`panelnum`参数为面板编号，即为你所收到注册邮件的`panel*.serv00.com`中的`*`数值。
+> 其中`panel`参数为面板域名，即为你所收到注册邮件的`panel*.serv00.com`值。
 
-## 贡献
-
-|姓名|主页|内容|
-| :------------: | :------------: | :------------: |
-|linzjian666|https://github.com/linzjian666|增加多面板支持|
-
-## 参考信息
-
-|  名称 |来源|地址|
-| :------------: | :------------: | :------------: |
-|Limkon|Github|https://github.com/Limkon|
+4. **非必须** 创建Telegram 机器人两个参数的 `Secret`：`TELEGRAM_BOT_TOKEN` 和  `TELEGRAM_CHAT_ID`
 
 ## SSH登录不上
 
@@ -100,3 +99,41 @@ serv00虽然有10年使用期，但无法清除Apache和其它服务产生的日
 ## JSON生成
 
 - <https://lopins.github.io/serv00-auto-scripts/>
+
+## TG机器人
+
+### 创建 Telegram Bot 并获取 Chat ID
+
+#### 步骤 1: 创建 `Telegram Bot`
+
+1. **打开 `Telegram` 应用**：
+
+   - 打开你的 `Telegram` 应用程序。
+
+2. **搜索 `BotFather`**：
+
+   - 在搜索栏中搜索 `@BotFather` 并点击进入。
+
+3. **创建新机器人**：
+
+   - 发送 `/start` 命令启动 BotFather。
+   - 发送 `/newbot` 命令创建一个新的机器人。
+   - 按照提示输入机器人的名称（可以是你喜欢的任何名称）。
+   - 输入机器人的用户名（必须以 `bot` 结尾，例如 `MyBotNameBot`）。
+   - BotFather 会生成一个 API token 并提供给你。请保存这个 token，后续会用到。
+
+#### 步骤 2: 获取 Chat ID
+
+为了能够向特定的用户或群组发送消息，你需要知道他们的 `Chat ID`。你可以通过创建一个简单的 `Telegram Bot` 来获取 `Chat ID`。
+
+1. **创建一个简单的 Bot**：
+
+   - 使用你刚刚生成的 `API token` 创建一个简单的 `Bot`。
+
+2. **设置 Webhook 或轮询**：
+
+   - 你可以选择设置 `Webhook` 或使用轮询来接收消息。这里我们使用轮询方式。
+
+3. **获取 Chat ID**：
+
+   - 当用户发送消息给你的 `Bot` 时，你可以从消息中提取 `Chat ID`。

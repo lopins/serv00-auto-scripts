@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico">
-    <title>Serv00 JSON Generator -- Serv00.com</title>
-    <meta name="keywords" content="JSON Generator, Serv00, Serv00.com">
-    <meta name="description" content="Serv00 JSON Generator is a tool for generating JSON data. It provides various options to customize the generated JSON.">
+    <title>Serv00/CT8 JSON Generator -- Serv00.COM/CT8.PL</title>
+    <meta name="keywords" content="JSON Generator, Serv00, ct8, Serv00.com, ct8.pl">
+    <meta name="description" content="Serv00/CT8 JSON Generator is a tool for generating JSON data. It provides various options to customize the generated JSON.">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <style>
@@ -145,8 +145,8 @@
                             <el-form-item :label="currentLang.password" class="form-item">
                                 <el-input v-model="user.password" type="password"></el-input>
                             </el-form-item>
-                            <el-form-item :label="currentLang.panelnum" class="form-item">
-                                <el-input v-model="user.panelnum"></el-input>
+                            <el-form-item :label="currentLang.panel" class="form-item">
+                                <el-input v-model="user.panel"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="2" class="right-align">
@@ -250,7 +250,7 @@
                 title: 'Input Panel Data',
                 username: 'Username:',
                 password: 'Password:',
-                panelnum: 'Panel No:',
+                panel: 'Panel Domain:',
                 add: 'Add User',
                 remove: 'Remove',
                 generate: 'Generate JSON',
@@ -262,7 +262,7 @@
                 title: '输入面板数据',
                 username: '用 户 名:',
                 password: '账号密码:',
-                panelnum: '面板编号:',
+                panel: '面板域名:',
                 add: '添加用户',
                 remove: '移除',
                 generate: '生成 JSON',
@@ -282,7 +282,7 @@
             data() {
                 return {
                     users: [
-                        { username: '', password: '', panelnum: '' }
+                        { username: '', password: '', panel: '' }
                     ],
                     jsonOutput: '',
                     highlightedJson: '',
@@ -296,14 +296,14 @@
             },
             methods: {
                 addUser() {
-                    this.users.push({ username: '', password: '', panelnum: '' });
+                    this.users.push({ username: '', password: '', panel: '' });
                 },
                 removeUser(index) {
                     this.users.splice(index, 1);
                 },
                 generateJson() {
                     // Check for empty fields
-                    const hasEmptyFields = this.users.some(user => !user.username || !user.password || !user.panelnum);
+                    const hasEmptyFields = this.users.some(user => !user.username || !user.password || !user.panel);
                     if (hasEmptyFields) {
                         this.$message({
                             message: this.currentLang.emptyFieldsWarning,
@@ -313,9 +313,9 @@
                     }
 
                     const data = this.users.map(user => ({
-                        username: user.username,
-                        password: user.password,
-                        panelnum: user.panelnum
+                        username: user.username.toString(),
+                        password: user.password.toString(),
+                        panel: user.panel.toString()
                     }));
                     this.jsonOutput = JSON.stringify(data, null, 4);
                     this.highlightedJson = hljs.highlight('json', this.jsonOutput).value;

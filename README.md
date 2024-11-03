@@ -2,23 +2,32 @@
    <a href="README_CN.md">中文</a> | <strong>English</strong>
 </div>
 
-<img src="https://www.serv00.com/static/ct8/img/logo.jpg" alt="serv00 logo" width="100" height="100" align="right" />
+<img src="https://www.serv00.com/static/ct8/img/logo.jpg" alt="serv00 logo" width="50" height="50" align="right" />
 
 <div align="center">
 
 <h1> serv00-auto-scripts </h1>
 
-<p>Serv00 - Free Host Auto Renewal (Automatic SSH and PM2) and Other Scripts</p>
+<p>Serv00/CT8 - Free Host Auto Renewal (Automatic SSH and PM2) and Other Scripts</p>
 
 </div>
 
 <hr/>
 
 <div align="center">
-<a href="https://panel.serv00.com/">Demo</a> | 
-<a href="https://www.serv00.com/">Official</a> | 
-<a href="https://docs.serv00.com/">Docs</a> | 
-<a href="https://forum.serv00.com/">Forum</a>
+<a href="https://panel.serv00.com/">serv00 Demo</a> | 
+<a href="https://www.serv00.com/">serv00 Official</a> | 
+<a href="https://docs.serv00.com/">serv00 Docs</a> | 
+<a href="https://forum.serv00.com/">serv00 Forum</a>
+</div>
+
+<hr/>
+
+<div align="center">
+<a href="https://panel.ct8.pl/">CT8 Demo</a> | 
+<a href="https://www.ct8.pl/">CT8 Official</a> | 
+<a href="https://wiki.mydevil.net/">CT8 Docs</a> | 
+<a href="https://forum.ct8.pl/">CT8 Forum</a>
 </div>
 
 <hr/>
@@ -33,25 +42,15 @@
 
 ``` json
 [  
-  { "username": "qishihuang", "password": "zhanghao", "panelnum": "3" },  
-  { "username": "zhaogao", "password": "daqinzhonggong", "panelnum": "1" },  
-  { "username": "heiheihei", "password": "shaibopengke", "panelnum": "2" }  
+  { "username": "qishihuang", "password": "zhanghao", "panel": "panel3.serv00.com" },  
+  { "username": "zhaogao", "password": "daqinzhonggong", "panel": "panel1.serv00.com" },  
+  { "username": "heiheihei", "password": "shaibopengke", "panel": "panel.ct8.pl" }  
 ]
 ```
 
-> The `panelnum` parameter is the panel number, which is the `*` value in the `panel*.serv00.com` from the registration email you received.
+> The `panel` parameter is the panel number, which is the value in the `panel*.serv00.com` from the registration email you received.
 
-## Contributions
-
-|Name|Homepage|Content|
-| :------------: | :------------: | :------------: |
-|linzjian666|https://github.com/linzjian666|Add support for multiple panels|
-
-## Reference Information
-
-| Name |Source|Address|
-| :------------: | :------------: | :------------: |
-|Limkon|Github|https://github.com/Limkon|
+4. **Optional** Creating two parameters `Secret` for the Telegram bot: `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`
 
 ## Unable to SSH Login
 
