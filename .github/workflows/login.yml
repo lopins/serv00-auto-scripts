@@ -40,4 +40,4 @@ jobs:
       - name: Login into Serv00/CT8
         run: |  
           set -e  
-          xvfb-run --server-args="-screen 0 1366x768x32" node main.js
+          xvfb-run --server-args="-screen 0 1280x1024x24" node src/main.js
